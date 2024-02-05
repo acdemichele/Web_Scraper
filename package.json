@@ -1,0 +1,15 @@
+{
+  "name": "web_scraper",
+  "version": "1.0.0",
+  "description": "Web Scraper to generate an internal links report for any website on the internet using Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "jest"
+  },
+  "author": "Alex D",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
