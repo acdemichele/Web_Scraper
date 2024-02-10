@@ -1,48 +1,57 @@
-
-
-const normalizeURL = (url) => {
-    
-    
-    // Solution without using the URL object from Node API
-
-    // try {
-    //     // split the URL by '//' to remove the protocol
-    // const url_split_list = url.split('//')
-
-    //     // extracting the parsed URL from the list
-    // const url_without_protocol = url_split_list[1]  
-
-    // // checking if there is a backslash at the end
-    // if (url_without_protocol[url_without_protocol.length - 1] == '/'){
-    //     const new_url = url_without_protocol.slice(0, url_without_protocol.length - 1)
-    //     return new_url
-    // }   
-    // return url_without_protocol 
-
-    // } catch (error) {
-    //     console.log("There was an error parsing the URL", error)
-    // }
-    
-
-    pass
-
-}
-
-// Error handling classes
-
-class EmptyURLError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'DivideByZeroError';
+const normalizeURL = (input_URL)  => {
+    if (!input_URL || typeof input_URL !== 'string') {
+        throw new WrongParameterError();
     }
 
+    const fullPath = new URL(input_URL.trim().toLowerCase());
+    if (!fullPath.protocol || (fullPath.protocol !== 'http:' && fullPath.protocol !== 'https:')) {
+        throw new WrongProtocolError();
+    }
 
+    if (!fullPath.pathname) {
+        throw new InvalidPathname();
+    }
+
+    let return_url = `${fullPath.hostname}${fullPath.pathname}`;
+    if (return_url.length > 0 && return_url.slice(-1) === '/') {
+        return_url = return_url.slice(0, -1);
+    }
+
+    return return_url;
+}
+// Error handling classes
+class InvalidPathname extends Error {
+    constructor(message = 'Invalid Path') {
+        super(message);
+        this.name = this.constructor.name;
+        this.message = message;
+    }
 }
 
+class EmptyURLError extends Error {
+    constructor(message = 'URL must be non-empty') {
+        super(message);
+        this.name = this.constructor.name;
+        this.message = message;
+    }
+}
 
+class WrongProtocolError extends Error {
+    constructor(message = 'Incorrect Protocol used') {
+        super(message);
+        this.name = this.constructor.name;
+        this.message = message;
+    }
+}
 
+class WrongParameterError extends Error {
+    constructor(message = 'URL must be of type String') {
+        super(message);
+        this.name = this.constructor.name;
+        this.message = message;
+    }
+}
 
 module.exports = {
-
-    normalizeURL
-}
+    normalizeURL,
+};
