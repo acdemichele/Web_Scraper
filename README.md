@@ -4,7 +4,7 @@ This Node.js CLI application is a web crawler that analyzes the internal linking
 ### Installation
 Before running the application, ensure you have Node.js installed on your system. You can download and install it from Node.js official website.
 
-1. Clone this repository to your local machine:
+Clone this repository to your local machine:
 
 
 ```git clone https://github.com/your-username/web-crawler.git```
@@ -27,7 +27,7 @@ To use the web crawler CLI, run the following command from the terminal:
 Replace <website-url> with the URL of the website you want to crawl. For example:
 
 
-'''node crawler.js https://example.com'''
+```node crawler.js https://example.com```
 
 ### Features
 
