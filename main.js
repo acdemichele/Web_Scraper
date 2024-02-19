@@ -1,6 +1,6 @@
 const { argv } = require('node:process');
 const { crawlPage } = require('./crawl.js')
-
+const { printReport } = require('./report.js')
 async function main(){
 
 
@@ -20,7 +20,10 @@ async function main(){
 
     
 
-    await crawlPage(baseURL)
+    const pages = await crawlPage(baseURL, baseURL, {})
+    
+
+    printReport(pages)
 
 
  }

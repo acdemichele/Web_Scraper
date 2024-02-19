@@ -50,11 +50,35 @@ function getURLsFromHTML(htmlBody, baseURL){
 
 const crawlPage = async (rootURL, currentURL, pages)  => {
 
+    // create URL Object for currentURL
+    const currentURLObject = new URL(currentURL)
+    // create URL Object for rootURL
+    const rootURLObject = new URL(rootURL)
+
+    if (currentURLObject.hostname != rootURLObject.hostname){
+        return pages
+    }
+
+    const normalizedURL = normalizeURL(currentURL)
+
+    if (pages[normalizedURL] > 0){
+
+        pages[normalizedURL] ++
+        return pages
+    }
+
+    if (currentURL == rootURL){
+        pages[normalizedURL] = 0
+    }else{
+        pages[normalizedURL] = 1
+    }
+
+    let html_body = ''
     try {
-        const response = await fetch(rootURL)
+        const response = await fetch(currentURL)
         if (response.status > 399){
             throw new Error(`Failed to fetch html of webpage, HTTP error: ${response.status}`)
-            return
+            return pages
         }
         
         const contentType = response.headers.get('content-type')
@@ -62,17 +86,27 @@ const crawlPage = async (rootURL, currentURL, pages)  => {
         if ((!contentType) || !contentType.includes('text/html')){
 
             throw new Error(`Response is non-HTML: ${contentType}`)
-            return
+            return pages
         }   
 
-        const html_body = await response.text()
-        console.log(html_body)
+        html_body = await response.text()
         
+        
+
     } catch (error) {
-        console.error('Error:', error)
-        throw error
+        console.error('Error:', error.message)
+        
         
     }
+    console.log(`Getting URLS from: ${currentURL}.....\n`)
+
+    const url_list = getURLsFromHTML(html_body, currentURL)
+        
+    for (const next_URL of url_list){
+        pages = await crawlPage(rootURL, next_URL, pages)
+
+    }
+    return pages    
   }
 
 
