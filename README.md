@@ -17,7 +17,7 @@ Install dependencies:
 
 ```npm install```
 
-### Usage
+## Usage
 
 To use the web crawler CLI, run the following command from the terminal:
 
@@ -29,23 +29,23 @@ Replace <website-url> with the URL of the website you want to crawl. For example
 
 ```node crawler.js https://example.com```
 
-### Features
+## Features
 
 - Crawls the provided website to analyze its internal linking profile.
 - Provides a report on the internal linking profile of the website.
 - Developed using Test-Driven Development (TDD) with Jest for robustness and reliability.
 
 
-### Test
+## Test
 To run tests, use the following command:
 
 ```npm test```
 
 This will execute all the tests written using Jest to ensure the correctness of the application.
 
-### Contributing
+## Contributing
 Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
 
-### License
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
